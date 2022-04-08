@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, {useEffect , useState} from 'react';
 import ScrollToTop from "react-scroll-to-top";
 import './App.css';
+import ThemeButton from './components/ThemeButton';
+
+import {Sprites,TypeData,Types,PokemonDetails,Pok,PokemonProp} from './interfaces/interfaces';
 
 function App() {
 
@@ -18,48 +21,13 @@ function App() {
 	
 	
 	
+	
 	let details : any;
 
 	
-
-	interface Sprites {
-
-		front_default: string,
-		
-	}
-
-	interface Types {
-
-		type: string,
-	}
-
 	
 
-	interface PokemonDetails{
-
-		
-		height: number,
-		weight: number,
-		name: string,
-		sprites: Sprites,
-		types: Types
-		
-		
-
-	}
-
-	interface Pok{
-
-		pokemon: PokemonDetails
-	}
-
-	interface PokemonProp{
-
-		url: string,
-		name: string,
-		
-		
-	}
+	
 
 	
 
@@ -156,7 +124,7 @@ function App() {
 		
 		
 		
-		console.log(pokemonData);
+		
 
 	},[offset])
 
@@ -276,19 +244,33 @@ function App() {
 		setOffset(off);
 	}
 
-	const changeTheme = ()=> {
-
-	 	document.body.classList.toggle('darktheme');
-		
-	 }
+	
 
   return (
     <div className="App">
        <h1>Catalogue of Pokémon.</h1>
-	   <button className="buttonStyle" onClick={() => changeTheme()}>THEME</button>
+	   
 	   <button className="buttonStyle" onClick={()=> addMorePokemons()}>Add more</button>
-	   <button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
-	   <button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
+		<ThemeButton/>
+	   <div className="sorting">
+
+		<div className="sortingByName">
+			<h2 className='sortingByName__title'>Sorting by name</h2>
+			<button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
+			<button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
+
+		</div>
+	    
+		<div className="sortingByName">
+			<h2 className='sortingByName__title'>Sorting by type</h2>
+			<button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
+			<button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
+
+		</div>
+
+	   </div>
+	   
+	   
 	   <ScrollToTop smooth={true}   style={{top: 50}}/>
 	   <ul>
 	   		
@@ -306,13 +288,16 @@ function App() {
 
 						<div id="pokemon-div" onClick={ () => fetchDetails()}>
 							<p className="pokemonName">{pokemon.name}</p>
+							
+								<h4>Type:</h4>
+								{pokemon.types.map(type => `${type.type.name}\r\n`)}
 								{isDetails &&  <PokemonInfo  pokemon={pokemon}/>}
 								{/* <div className='detailsDiv'> 
 									<p>Height: {heightArr[index]}</p>
 									<p>Weight: {weightArr[index]}</p>
 							</div> */}
 							
-							{console.log(pokemon.types)}
+							
 							
 							<img className="pokemonImg" src={pokemon.sprites.front_default} alt="imageof" />   
 								

@@ -65,6 +65,7 @@ ul > li{
 	cursor: pointer;
 	transition: 200ms all ease;
 	
+	
 }
 
 
@@ -111,6 +112,26 @@ ul > li{
 
 }
 
+.sorting{
+	display: flex;
+	gap: 20px;
+	width: 400px;
+	margin: 0 auto;
+}
 
+.sortingByName{
 
+	
+	margin: 20px auto;
+	width: 200px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	
+}
+
+.sortingByName__title{
+
+	font-size: 18px;
+}
 
