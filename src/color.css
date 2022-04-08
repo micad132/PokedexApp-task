@@ -2,16 +2,16 @@
 
 .lighttheme{
 
-	--main-background: rgb(247, 232, 213);
+	--main-background: #FFC98B;
 	--font-color: #000;
-	--elements-color: rgb(230, 189, 136);
+	--elements-color: #E9AE8C;
 }
 
 .darktheme{
 
-	--main-background: rgb(117, 70, 9);
-	--font-color: #fff;
-	--elements-color: rgb(224, 141, 32);
+	--main-background: #2c3e50;
+	--font-color: #eee;
+	--elements-color: #202020;
 }
 	
 

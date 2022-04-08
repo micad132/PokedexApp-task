@@ -2,222 +2,88 @@ import axios from 'axios';
 import React, {useEffect , useState} from 'react';
 import ScrollToTop from "react-scroll-to-top";
 import './App.css';
+import PokemonList from './components/PokemonList';
 import ThemeButton from './components/ThemeButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {Sprites,TypeData,Types,PokemonDetails,Pok,PokemonProp} from './interfaces/interfaces';
 
 function App() {
 
-	const [sprite,getSprite] = useState('');
-	const [pokemonDetails, getpokemonDetails] = useState<Array<any>>([]);
+	
+	
 	const [pokemonData,getpokemonData] = useState<Array<PokemonDetails>>([]);
 	const [isDetails,setisDetails] = useState(false);
-	const [weightArr,setWeight] = useState<Array<any>>([]);
-	const [heightArr,setHeight] = useState<Array<any>>([]);
-	const [nameArr,setName] = useState<Array<any>>([]);
-	const [typesArr,setTypes] = useState<Array<any>>([]);
-	const [spritesArr,setspritesArr] = useState<Array<any>>([]);
 	const [offset,setOffset] = useState<number>(0);
-	
-	
-	
-	
-	let details : any;
-
-	
+	const [isLoading,setIsLoading] = useState<boolean>(false);
 	
 
-	
-
-	
 
 	useEffect( ()=> {
 
-
-		
-
-		
-		// const heightArray : Array<PokemonDetails> = [];
-		// const weightArray : Array<PokemonDetails> = [];
-		// const spritesArray : Array<PokemonDetails> = [];
-		// const namesArray : Array<PokemonDetails> = [];
-		
 		
 		axios.get(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`)
 		.then(async res => {
 			
-			
-			
-			//getpokemonData(res.data.results);
-			
-			//fetchingDetails(pokemonData[5]);
-			
-
-			const pokeProps: Array<PokemonProp> = res.data.results;
-
-			
-		 
-
-				//console.log(1,pok);
-				//fetchingDetails(pok);
 				
+
+				const pokeProps: Array<PokemonProp> = res.data.results;
+	
 				 for(let i=0;i<pokeProps.length;i++){
 
 					const data = await axios.get(pokeProps[i].url);
-					const {name,weight,height , sprites,types} = data.data;
-				
-						
-						
+					const {name,weight,height , sprites,types} = data.data;					
 					pokemonData.push({name,weight,height,sprites,types});
 					getpokemonData([...pokemonData]);
-					// axios.get(pokeProps[i].url)
-					// .then( res => {
-			
-					// 	const {name,weight,height , sprites} = res.data;
-						
-						
-					// 	pokemonData.push({name,weight,height,sprites});
-					// 	getpokemonData(pokemonData);
-					// 	// heightArray.push(height);
-					// 	// weightArray.push(weight);
-					// 	// spritesArray.push(sprites);
-					// 	// nameArr.push(name);
-						
-					// 	// pokeProps[i].sprites = sprites;
-						
-						
-						
-					// 	// setTypes(typesArr => [...typesArr,types]);
-					// 	// setspritesArr(spritesArr => [...spritesArr, sprites]);
-						
-						
-					// })
-					// .catch( err =>{
-			
 					
-					// 	console.log(err);
-					// 	throw err;
-					// })
-
-
 
 				 }
-					
-			
-					
-			
+									
+				 setIsLoading(true);
 			
 			
 		})
+		
 		.catch( err => {
 			
 			console.log(err);
 			throw err;
 		})
 
-		// setHeight(heightArray);
-		// setWeight(weightArray);
-		// setspritesArr(spritesArray);
-		// setName(namesArray);
-		
-		//getpokemonData(spritesArray);
-		
-		
-		
-		
 
 	},[offset])
 
 
-	
 
-	// const fetchingDetails = (url: any) => {
+	const sortingASCByFirstType = () =>  {
 
-		
-	// 	let cos = url.url;
-	// 	console.log(2, cos);
 
-	// 	const getDetails = async () =>{
+			const sorted = [...pokemonData].sort((a,b)=>{
 
-	// 	await axios.get(cos)
-	// 	.then( res => {
+				return a.types[0].type.name.toLowerCase() > b.types[0].type.name.toLowerCase() ? 1: -1;
+			})
 
-	// 		const {weight,height , types, sprites} = res.data;
-	// 		let sprite = sprites;
-	// 		setHeight( heightArr => [...heightArr , height]);
-	// 		setWeight(weightArr => [...weightArr, weight]);
-	// 		setTypes(typesArr => [...typesArr,types]);
-	// 		setspritesArr(spritesArr => [...spritesArr, sprites]);
-			
-	// 	})
-	// 	.catch( err =>{
+			getpokemonData(sorted);
 
-		
-	// 		console.log(err);
-	// 		throw err;
-	// 	})
-
-	// 	}
-		
-	// }
-
-	const PokemonInfo = ( {pokemon} : Pok)  => {
-
-		
-		
-	  	return <div className='infoDiv'>
-	  		<p> Weight: {pokemon.weight}</p>
-	  		<p> height: {pokemon.height}</p>
-			 
-	  	</div>
-	 }
-
-	 const fetchDetails = () => {
-
-		
-	 	if(isDetails === false){
-	 		setisDetails(true);
-	 	}
-	 	else{
-	 		setisDetails(false);
-	 	}
 
 	}
-		
-		
-		// console.log('siema');
-		// const divv = document.querySelectorAll('.detailsDiv');
-		
 
-		// divv.forEach( item => {
+	const sortingDESCByFirstType = () => {
 
-		// 	item.addEventListener('click',()=> {
 
-		// 		item.classList.toggle('hidden');
-		// 	})
-		// })
-		// if(isDetails){
-		// 	setisDetails(false);
-		// }
-		// else{
-		// 	setisDetails(true);
-		// }
-		
-		// axios.get(api)
-		// .then( res => {
+		const sorted = [...pokemonData].sort((a,b)=>{
 
-		// 	const {weight,height} = res.data;
-		// 	//setPokemonInfo(weight,height);
-			
-		// })
-		// .catch( err => console.log(err))
+			return a.types[0].type.name.toLowerCase() < b.types[0].type.name.toLowerCase() ? 1: -1;
+		})
 
-		
+		getpokemonData(sorted);
 
-		
-	//}
 
-	const sortingASC = () => {
+}
+
+	const sortingASCByName = () => {
 
 		const sorted = [...pokemonData].sort((a,b)=>{
 
@@ -227,7 +93,7 @@ function App() {
 		getpokemonData(sorted);
 	}
 
-	const sortingDESC = () => {
+	const sortingDESCByName = () => {
 
 		const sorted = [...pokemonData].sort((a,b)=>{
 
@@ -237,11 +103,17 @@ function App() {
 		getpokemonData(sorted);
 	}
 
-	const addMorePokemons = ()=>{
+	const addMorePokemons = () : void =>{
 
 		let off = offset;
 		off = off +20;
 		setOffset(off);
+		toast.success('More pokemons added!', {
+			position: "top-right",
+			autoClose: 2000,
+			hideProgressBar: true,
+			closeOnClick: true,
+			});
 	}
 
 	
@@ -251,20 +123,22 @@ function App() {
        <h1>Catalogue of Pokémon.</h1>
 	   
 	   <button className="buttonStyle" onClick={()=> addMorePokemons()}>Add more</button>
+	   
 		<ThemeButton/>
+		<ToastContainer />
 	   <div className="sorting">
 
 		<div className="sortingByName">
-			<h2 className='sortingByName__title'>Sorting by name</h2>
-			<button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
-			<button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
+			<h2 className='sortingByName__title fontColor'>Sorting by name</h2>
+			<button className="buttonStyle" onClick= {()=> sortingASCByName()}>Sort ASC</button>
+			<button className="buttonStyle" onClick= {()=> sortingDESCByName()}>Sort DESC</button>
 
 		</div>
 	    
 		<div className="sortingByName">
-			<h2 className='sortingByName__title'>Sorting by type</h2>
-			<button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
-			<button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
+			<h2 className='sortingByName__title fontColor'>Sorting by type</h2>
+			<button className="buttonStyle" onClick= {()=> sortingASCByFirstType()}>Sort ASC</button>
+			<button className="buttonStyle" onClick= {()=> sortingDESCByFirstType()}>Sort DESC</button>
 
 		</div>
 
@@ -272,45 +146,8 @@ function App() {
 	   
 	   
 	   <ScrollToTop smooth={true}   style={{top: 50}}/>
-	   <ul>
-	   		
-	   		
-		   {
-			   
-			   
-			    pokemonData.map((pokemon,index) =>
-				
-				
-
-				
-			   
-					<li key={pokemon.name}>
-
-						<div id="pokemon-div" onClick={ () => fetchDetails()}>
-							<p className="pokemonName">{pokemon.name}</p>
-							
-								<h4>Type:</h4>
-								{pokemon.types.map(type => `${type.type.name}\r\n`)}
-								{isDetails &&  <PokemonInfo  pokemon={pokemon}/>}
-								{/* <div className='detailsDiv'> 
-									<p>Height: {heightArr[index]}</p>
-									<p>Weight: {weightArr[index]}</p>
-							</div> */}
-							
-							
-							
-							<img className="pokemonImg" src={pokemon.sprites.front_default} alt="imageof" />   
-								
-							
-							
-
-						</div>
-					</li>)
-				
-				
-			  
-		   }
-	   </ul>
+	   {isLoading? <PokemonList pokemonData={pokemonData}/> : <ClipLoader   color={'orange'}size={50} />}
+	   
 	   
     </div>
 

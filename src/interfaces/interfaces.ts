@@ -27,7 +27,8 @@ export interface PokemonDetails{
 	weight: number,
 	name: string,
 	sprites: Sprites,
-	types: Array<Types>
+	types: Array<Types>,
+	
 	
 	
 

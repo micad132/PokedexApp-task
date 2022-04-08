@@ -36,6 +36,7 @@ img{
 	cursor: pointer;
 	transition: 200ms all ease;
 	margin-right: 10px;
+	color: var(--font-color);
 }
 
 .buttonStyle:hover , .buttonStyle:hover{
@@ -133,5 +134,11 @@ ul > li{
 .sortingByName__title{
 
 	font-size: 18px;
+	color: var(--font-color);
+}
+
+.fontColor{
+
+	color: var(--font-color);
 }
 
