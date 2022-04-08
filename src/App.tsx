@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useEffect , useState} from 'react';
+import ScrollToTop from "react-scroll-to-top";
 import './App.css';
 
 function App() {
@@ -261,6 +262,7 @@ function App() {
 	   <button className="themeChange" onClick={() => changeTheme()}>THEME</button>
 	  
 	   <button className="addPokemons" onClick={()=> addMorePokemons()}>Add more</button>
+	   <ScrollToTop smooth={true}   style={{top: 50}}/>
 	   <ul>
 	   		
 	   		
