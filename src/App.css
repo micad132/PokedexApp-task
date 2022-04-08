@@ -25,7 +25,7 @@ img{
 	
 }
 
-.themeChange{
+.buttonStyle{
 	border: 2px solid #000;
 	border-radius: 30px;
 	padding: 10px 30px;
@@ -35,6 +35,13 @@ img{
 	text-transform: uppercase;
 	cursor: pointer;
 	transition: 200ms all ease;
+	margin-right: 10px;
+}
+
+.buttonStyle:hover , .buttonStyle:hover{
+
+	background-color: #000;
+	color: #fff;
 }
 
 
@@ -60,11 +67,7 @@ ul > li{
 	
 }
 
-.themeChange:hover , .addPokemons:hover{
 
-	background-color: #000;
-	color: #fff;
-}
 
 #pokemon-div{
 
@@ -101,7 +104,12 @@ ul > li{
 	display: none;
 }
 
+.pokemonImg{
+	width: 100px;
+	height: 100px;
+	
 
+}
 
 
 

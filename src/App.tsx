@@ -28,6 +28,11 @@ function App() {
 		
 	}
 
+	interface Types {
+
+		type: string,
+	}
+
 	
 
 	interface PokemonDetails{
@@ -36,7 +41,8 @@ function App() {
 		height: number,
 		weight: number,
 		name: string,
-		sprites: Sprites
+		sprites: Sprites,
+		types: Types
 		
 		
 
@@ -90,11 +96,11 @@ function App() {
 				 for(let i=0;i<pokeProps.length;i++){
 
 					const data = await axios.get(pokeProps[i].url);
-					const {name,weight,height , sprites} = data.data;
+					const {name,weight,height , sprites,types} = data.data;
 				
 						
 						
-					pokemonData.push({name,weight,height,sprites});
+					pokemonData.push({name,weight,height,sprites,types});
 					getpokemonData([...pokemonData]);
 					// axios.get(pokeProps[i].url)
 					// .then( res => {
@@ -149,8 +155,8 @@ function App() {
 		//getpokemonData(spritesArray);
 		
 		
-		console.log('jd');
 		
+		console.log(pokemonData);
 
 	},[offset])
 
@@ -243,6 +249,26 @@ function App() {
 		
 	//}
 
+	const sortingASC = () => {
+
+		const sorted = [...pokemonData].sort((a,b)=>{
+
+			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+		})
+
+		getpokemonData(sorted);
+	}
+
+	const sortingDESC = () => {
+
+		const sorted = [...pokemonData].sort((a,b)=>{
+
+			return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
+		})
+
+		getpokemonData(sorted);
+	}
+
 	const addMorePokemons = ()=>{
 
 		let off = offset;
@@ -259,9 +285,10 @@ function App() {
   return (
     <div className="App">
        <h1>Catalogue of Pokémon.</h1>
-	   <button className="themeChange" onClick={() => changeTheme()}>THEME</button>
-	  
-	   <button className="addPokemons" onClick={()=> addMorePokemons()}>Add more</button>
+	   <button className="buttonStyle" onClick={() => changeTheme()}>THEME</button>
+	   <button className="buttonStyle" onClick={()=> addMorePokemons()}>Add more</button>
+	   <button className="buttonStyle" onClick= {()=> sortingASC()}>Sort ASC</button>
+	   <button className="buttonStyle" onClick= {()=> sortingDESC()}>Sort DESC</button>
 	   <ScrollToTop smooth={true}   style={{top: 50}}/>
 	   <ul>
 	   		
@@ -285,8 +312,9 @@ function App() {
 									<p>Weight: {weightArr[index]}</p>
 							</div> */}
 							
-							{console.log(pokemon.sprites)}
-							<img src={pokemon.sprites.front_default} alt="imageof" />   
+							{console.log(pokemon.types)}
+							
+							<img className="pokemonImg" src={pokemon.sprites.front_default} alt="imageof" />   
 								
 							
 							
