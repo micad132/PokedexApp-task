@@ -1,5 +1,5 @@
 import { url } from "inspector";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { JsxElement } from "typescript";
 import { PokemonDetails,Pok } from "../interfaces/interfaces";
 
@@ -12,7 +12,15 @@ export default function PokemonList({pokemonData}:CompProps){
 
 
 	const [isDetails,setisDetails] = useState(false);
+	const [isOpen,setIsOpen] = useState<Array<boolean>>([]);
 
+
+	useEffect(()=> {
+
+		setIsOpen(pokemonData.map(pok => false))
+
+	},[pokemonData])
+    
 
    const PokemonInfo = ( {pokemon} : Pok) : JSX.Element  => {
 
@@ -25,9 +33,11 @@ export default function PokemonList({pokemonData}:CompProps){
 	</div>
 }
 
-	const showDetails = () : void => {
+	const showDetails = (index : number) : void => {
 
-		setisDetails(!isDetails);
+		// setisDetails(!isDetails);
+		isOpen[index] = !isOpen[index];
+		setIsOpen([...isOpen]);
 
 	}
 
@@ -42,16 +52,13 @@ export default function PokemonList({pokemonData}:CompProps){
 					   
 					<li key={pokemon.name} className="fontColor" >
 
-						<div id="pokemon-div" onClick={ () => showDetails()}>
+						<div id="pokemon-div" onClick={ () => showDetails(index)}>
 							<p className="pokemonName">{pokemon.name}</p>
 							
 								<h4>Type:</h4>
 								{pokemon.types.map(type => `${type.type.name}\n`)}
-								{isDetails &&  <PokemonInfo  pokemon={pokemon}/>}
-								{/* <div className='detailsDiv'> 
-									<p>Height: {heightArr[index]}</p>
-									<p>Weight: {weightArr[index]}</p>
-							</div> */}
+								{isOpen[index] &&  <PokemonInfo  pokemon={pokemon}/>}
+								
 												
 							<img className="pokemonImg" src={pokemon.sprites.front_default} alt="imageof" />   
 								
