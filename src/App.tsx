@@ -14,7 +14,7 @@ function App() {
 
 	
 	
-	const [pokemonData,getpokemonData] = useState<Array<PokemonDetails>>([]);
+	const [pokemonData,setPokemonData] = useState<Array<PokemonDetails>>([]);
 	const [isDetails,setisDetails] = useState(false);
 	const [offset,setOffset] = useState<number>(0);
 	const [isLoading,setIsLoading] = useState<boolean>(false);
@@ -36,7 +36,7 @@ function App() {
 					const data = await axios.get(pokeProps[i].url);
 					const {name,weight,height , sprites,types} = data.data;					
 					pokemonData.push({name,weight,height,sprites,types});
-					getpokemonData([...pokemonData]);
+					setPokemonData([...pokemonData]);
 					
 
 				 }
@@ -65,7 +65,7 @@ function App() {
 				return a.types[0].type.name.toLowerCase() > b.types[0].type.name.toLowerCase() ? 1: -1;
 			})
 
-			getpokemonData(sorted);
+			setPokemonData(sorted);
 
 
 	}
@@ -78,7 +78,7 @@ function App() {
 			return a.types[0].type.name.toLowerCase() < b.types[0].type.name.toLowerCase() ? 1: -1;
 		})
 
-		getpokemonData(sorted);
+		setPokemonData(sorted);
 
 
 }
@@ -90,7 +90,7 @@ function App() {
 			return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
 		})
 
-		getpokemonData(sorted);
+		setPokemonData(sorted);
 	}
 
 	const sortingDESCByName = () => {
@@ -100,7 +100,7 @@ function App() {
 			return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
 		})
 
-		getpokemonData(sorted);
+		setPokemonData(sorted);
 	}
 
 	const addMorePokemons = () : void =>{
