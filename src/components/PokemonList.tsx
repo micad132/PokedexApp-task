@@ -11,7 +11,7 @@ interface CompProps{
 export default function PokemonList({pokemonData}:CompProps){
 
 
-	const [isDetails,setisDetails] = useState(false);
+	
 	const [isOpen,setIsOpen] = useState<Array<boolean>>([]);
 
 

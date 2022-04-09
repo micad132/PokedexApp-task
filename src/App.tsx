@@ -15,7 +15,7 @@ function App() {
 	
 	
 	const [pokemonData,setPokemonData] = useState<Array<PokemonDetails>>([]);
-	const [isDetails,setisDetails] = useState(false);
+	
 	const [offset,setOffset] = useState<number>(0);
 	const [isLoading,setIsLoading] = useState<boolean>(false);
 	
