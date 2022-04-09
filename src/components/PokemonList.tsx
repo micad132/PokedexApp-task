@@ -35,7 +35,7 @@ export default function PokemonList({pokemonData}:CompProps){
 
 	const showDetails = (index : number) : void => {
 
-		// setisDetails(!isDetails);
+		
 		isOpen[index] = !isOpen[index];
 		setIsOpen([...isOpen]);
 
